@@ -7,3 +7,12 @@ class Dataset(object):
         self.dataset_size = int()
         self.data = list()
         self.labels = list()
+
+    def concatence(self):
+        pass
+
+    def transform_data(self):
+        pass
+
+    def transform_labels(self):
+        pass
