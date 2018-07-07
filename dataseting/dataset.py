@@ -26,3 +26,13 @@ class Dataset(object):
         with given function.
         """
         pass
+
+
+class ImgClassifyDataset(Dataset):
+    """This dataset structure type is suitbale for problems
+    that classify images into different types. For example, mnist
+    dataset, coil-20 dataset, etc.
+    """
+
+    def __init__(self):
+        Dataset.__init__()
