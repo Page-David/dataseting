@@ -54,7 +54,7 @@ class ImgClassifyDataset(Dataset):
 
     @data.setter
     def data(self, data):
-        """Data setter in ImgClassifyDataset"""
+        """Data setter in ImgClassifyDataset."""
         if not len(data) == self.dataset_size:
             raise ValueError('Data list length not equals to dataset_size.')
 
@@ -78,3 +78,7 @@ class ImgClassifyDataset(Dataset):
     def label(self):
         """Label reader in ImgClassifyDataset."""
         return self._label
+
+    @label.setter
+    def label(self):
+        """Label setter in ImgClassifyDataset."""
