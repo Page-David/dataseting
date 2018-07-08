@@ -62,13 +62,14 @@ class ImgClassifyDataset(Dataset):
             raise ValueError('data should be a list.')
 
         for i in range(self.dataset_size):
-            if not isinstance(self.data[i], list):
+            if not isinstance(data[i], list):
                 raise ValueError('The image in data at index {}'
                                  'is not a list.'.format(i))
-            inst_mapping = list(map(lambda x: isinstance(x, (float, int))))
+            inst_mapping = list(map(lambda x: isinstance(x, (float, int)),
+                                    data[i]))
 
             if False in inst_mapping:
-                raise ValueError('There is a pixcel in {}th image and indexed'
+                raise ValueError('There is a pixcel in {}th image and indexed '
                                  '{} is not an instance of int or float.'
                                  .format(i, inst_mapping.index(False)))
 
@@ -80,5 +81,12 @@ class ImgClassifyDataset(Dataset):
         return self._label
 
     @label.setter
-    def label(self):
+    def label(self, label):
         """Label setter in ImgClassifyDataset."""
+        if not len(label) == self.dataset_size:
+            raise ValueError('Label list length not equals to dataset_size.')
+
+        if not isinstance(label, list):
+            raise ValueError('label should be a list.')
+
+        self._label = label
