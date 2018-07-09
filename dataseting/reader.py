@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Dataset reading functions."""
 import gzip
 import struct

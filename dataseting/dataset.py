@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Different datasets structures are defined here."""
 
 
