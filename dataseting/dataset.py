@@ -9,6 +9,8 @@ class Dataset(object):
         self.dataset_size = dataset_size
         self._data = list()
         self._label = list()
+        self.data_prop = dict()
+        self.valid_data_prop = list()
 
     def concatence(self):
         """Method used to concatence two datasets."""
@@ -17,6 +19,10 @@ class Dataset(object):
     @property
     def data(self):
         """Data in dataset."""
+        pass
+
+    def get_data_prop(self):
+        """Get some extra data static information for further analyse."""
         pass
 
     @property
@@ -89,3 +95,22 @@ class ImgClassifyDataset(Dataset):
             raise ValueError('Label list length not equals to dataset_size.')
 
         self._label = label
+
+    def get_data_prop(self):
+        """Get extra properties for each image"""
+        if not self._data:
+            raise ValueError('Data in this set is not set yet.')
+
+        if not self._label:
+            raise ValueError('Label in this et is not set yet.')
+
+        _uni_labels = list(set(self.label))
+        _count = dict((l, 0) for l in _uni_labels)
+        cls_count = list()
+
+        for i in self.label:
+            _count[self.label[i]] = _count[self.label[i]] + 1
+            cls_count.append(_count[self.label[i]])
+
+        self.valid_data_prop.append('count_by_class')
+        self.data_prop['count_by_class'] = cls_count
