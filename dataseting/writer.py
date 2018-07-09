@@ -7,6 +7,19 @@ from . import dataset
 def to_pngs(dst, folder_path, format_list, saver):
     """Write dataset to png images with given Dataset
     instance.
+
+    Parameters
+    ----------
+    dst : Dataset
+        An dataset that has images as its data attr.
+    folder_path : str
+        A directory that saves dataset.
+    format_list : list
+        A list that provides information on format filename
+    saver : callable
+        A function takes two arguments (path, image_in_1D_list)
+        you can write that with your favoriate image process
+        package (e.g., OpenCV, Pillow, matplotlib).
     """
     if not isinstance(dst, dataset.Dataset):
         raise TypeError('dst is not an Dataset type, but expected.')
@@ -48,4 +61,5 @@ def to_pngs(dst, folder_path, format_list, saver):
                 _s = _s + key[i]
         _s = _s + '.png'
         _s = os.path.join(folder_path, _s)
+
         saver(_s, dst.data[i])
