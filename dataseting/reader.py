@@ -50,7 +50,9 @@ def from_mnist_like(img_file, label_file, img_magic=2051, label_magic=2049):
         label = list(array.array('B', l_file.read()))
 
     if not i_nums == l_nums:
-        pass
+        raise ValueError('The number of images not equals to the '
+                         'number of labels. Double check if the label '
+                         'file matches the data file.')
 
     dst = dataset.ImgClassifyDataset(i_nums)
     dst.dataset_size = i_nums
