@@ -54,11 +54,11 @@ class ImgClassifyDataset(Dataset):
     @data.setter
     def data(self, data):
         """Data setter in ImgClassifyDataset."""
-        if not len(data) == self.dataset_size:
-            raise ValueError('Data list length not equals to dataset_size.')
-
         if not isinstance(data, list):
             raise ValueError('data should be a list.')
+
+        if not len(data) == self.dataset_size:
+            raise ValueError('Data list length not equals to dataset_size.')
 
         for i in range(self.dataset_size):
             if not isinstance(data[i], list):
@@ -82,10 +82,10 @@ class ImgClassifyDataset(Dataset):
     @label.setter
     def label(self, label):
         """Label setter in ImgClassifyDataset."""
-        if not len(label) == self.dataset_size:
-            raise ValueError('Label list length not equals to dataset_size.')
-
         if not isinstance(label, list):
             raise ValueError('label should be a list.')
+
+        if not len(label) == self.dataset_size:
+            raise ValueError('Label list length not equals to dataset_size.')
 
         self._label = label
