@@ -11,6 +11,7 @@ class Dataset(object):
         self._label = list()
         self.data_prop = dict()
         self.valid_data_prop = list()
+        self._batch_index = 0
 
     def concatence(self):
         """Method used to concatence two datasets."""
@@ -29,6 +30,32 @@ class Dataset(object):
     def label(self):
         """Labels in dataset."""
         pass
+
+    def next_batch(self, batch_size, cut_tail=False):
+        """Get next batch with given batch size."""
+        if not self.data or not self.label:
+            raise ValueError('Data or label has not set in this dataset.')
+
+        if not isinstance(batch_size, int):
+            raise ValueError('batch_size should be an int.')
+
+        if batch_size > self.dataset_size:
+            raise ValueError('Batch size should be less than dataset size.')
+
+        if batch_size + self._batch_index <= self.dataset_size:
+            _start = self._batch_index
+            _end = batch_size + self._batch_index
+            self._batch_index = self._batch_index + batch_size
+        else:
+            if cut_tail is True:
+                _start = 0
+                _end = batch_size
+            else:
+                _start = self._batch_index
+                _end = None
+            self._batch_index = 0
+
+        return self.data[_start: _end], self.label[_start: _end]
 
     def transform_data(self):
         """Method used to transform dataset data
