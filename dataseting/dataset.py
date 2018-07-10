@@ -79,6 +79,8 @@ class ImgClassifyDataset(Dataset):
                                  .format(i, inst_mapping.index(False)))
 
         self._data = data
+        if self.label:
+            self.get_data_prop()
 
     @property
     def label(self):
@@ -95,6 +97,8 @@ class ImgClassifyDataset(Dataset):
             raise ValueError('Label list length not equals to dataset_size.')
 
         self._label = label
+        if self.data:
+            self.get_data_prop()
 
     def get_data_prop(self):
         """Get extra properties for each image"""
