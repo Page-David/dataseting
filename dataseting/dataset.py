@@ -31,8 +31,8 @@ class Dataset(object):
         """Labels in dataset."""
         pass
 
-    def next_batch(self, batch_size, cut_tail=False):
-        """Get next batch with given batch size."""
+    def batches_generator(self, batch_size, cut_tail=False):
+        """A generator produce small batches in one epoch."""
         if not self.data or not self.label:
             raise ValueError('Data or label has not set in this dataset.')
 
@@ -42,20 +42,26 @@ class Dataset(object):
         if batch_size > self.dataset_size:
             raise ValueError('Batch size should be less than dataset size.')
 
-        if batch_size + self._batch_index <= self.dataset_size:
-            _start = self._batch_index
-            _end = batch_size + self._batch_index
-            self._batch_index = self._batch_index + batch_size
-        else:
-            if cut_tail is True:
-                _start = 0
-                _end = batch_size
-            else:
+        _flag = True
+
+        while _flag:
+            if batch_size + self._batch_index < self.dataset_size:
+                _start = self._batch_index
+                _end = batch_size + self._batch_index
+                self._batch_index = self._batch_index + batch_size
+            elif batch_size + self._batch_index == self.dataset_size:
                 _start = self._batch_index
                 _end = None
-            self._batch_index = 0
+                self._batch_index = 0
+            else:
+                if cut_tail is True:
+                    return
+                else:
+                    _start = self._batch_index
+                    _end = None
+                _flag = False
 
-        return self.data[_start: _end], self.label[_start: _end]
+            yield self.data[_start: _end], self.label[_start: _end]
 
     def transform_data(self):
         """Method used to transform dataset data
